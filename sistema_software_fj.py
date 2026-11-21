@@ -23,6 +23,26 @@ def configurar_logger(ruta_log: str = "software_fj.log") -> logging.Logger:
     return logger
 
 
+
+# ==============================================================================
+# 1. CONFIGURACIÓN DEL ARCHIVO DE LOGS (EVENTOS Y ERRORES)
+# ==============================================================================
+def configurar_logger(ruta_log: str = "software_fj.log") -> logging.Logger:
+    """Crea y configura un logger que escribe eventos y errores en un archivo."""
+    logger = logging.getLogger("SoftwareFJLogger")  # Obtiene o crea el logger
+    logger.setLevel(logging.INFO)  # Registra desde INFO en adelante (INFO, WARNING, ERROR)
+
+    if not logger.handlers:  # Evita duplicar handlers en ejecuciones repetidas
+        formato = logging.Formatter(
+            "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
+        )
+        manejador_archivo = logging.FileHandler(ruta_log, mode="a", encoding="utf-8")
+        manejador_archivo.setFormatter(formato)
+        logger.addHandler(manejador_archivo)
+
+    return logger
+
+
 logger = configurar_logger()
 
 
